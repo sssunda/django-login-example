@@ -8,7 +8,11 @@
         <form action="" method="POST">
             {% csrf_token %}
             {{join_data.as_p}}
+            {% if join_errors %}
+            <p>{{join_errors}}</p>
+            {% endif %}
         <input type="submit" value="회원가입"/>
+        <input type="button" value="뒤로" onclick="location.href='{% url 'main_page' %}'">
         </form>
     </body>
 </html>

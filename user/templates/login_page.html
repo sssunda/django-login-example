@@ -11,9 +11,8 @@
             {% if login_errors %}
             <p>{{login_errors}}</p>
             {% endif %}
-
-
         <input type="submit" value="로그인"/>
+        <input type="button" value="뒤로" onclick="location.href='{% url 'main_page' %}'">
         </form>
     </body>
 </html>

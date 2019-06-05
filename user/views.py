@@ -37,13 +37,22 @@ def join_page(request):
         form_data = JoinForm(request.POST)
         
         if form_data.is_valid():
-            username = form_data.cleaned_data['id']
-            password = form_data.cleaned_data['password']
             # get_user_model helper 함수를 통해 모델 클래스 참조
             User = auth.get_user_model()
-            User.objects.create_user(username=username, password=password)
 
-            return redirect('/')
+            username = form_data.cleaned_data['id']
+            password = form_data.cleaned_data['password']
+            password_check = form_data.cleaned_data['password_check']
+
+            # ID 중복여부
+            if User.objects.filter(username=username).exists():
+                return render(request, 'join_page.html', {'join_data':form_data, 'join_errors':'아이디가 이미 사용중입니다.'}) 
+                
+            # PASSWORD 동일한지 체크    
+            if password==password_check:
+                User.objects.create_user(username=username, password=password)
+                return redirect('/')
+            return render(request, 'join_page.html', {'join_data':form_data, 'join_errors':'비밀번호를 동일하게 입력해주십시오.'})
     else :
         form_data = JoinForm()
 
