@@ -1,2 +1,2 @@
-# login_example
+# django-login-example
 django login page example
