@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>
+            Join Page
+        </title>
+    </head>
+    <body>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{join_data.as_p}}
+        <input type="submit" value="회원가입"/>
+        </form>
+    </body>
+</html>

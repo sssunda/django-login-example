@@ -8,6 +8,11 @@
         <form action="validate" method="POST">
             {% csrf_token %}
             {{login_data.as_p}}
+            {% if login_errors %}
+            <p>{{login_errors}}</p>
+            {% endif %}
+
+
         <input type="submit" value="로그인"/>
         </form>
     </body>

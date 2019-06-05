@@ -5,10 +5,12 @@
     <body>
         {% if user.is_active %}
             <a>{{user.username}}</a>
-            <a href='{% url "logout" %}'>로그아웃</a>
+            
+            <input type="submit" value="로그아웃" onclick="location.href='{% url "logout" %}'">
+      
         {% else %}
-            <a href='{% url "login_page" %}'>로그인</a>
-            <a href=''>회원가입</a>
+            <input type="button" value="로그인" onclick="location.href='{% url "login_page" %}'">
+            <input type="button" value="회원가입" onclick="location.href='{% url "join_page" %}'">
         {% endif %}
     </body>
 </html>
