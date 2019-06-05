@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>
+            Login Page
+        </title>
+    </head>
+    <body>
+        <form action="validate" method="POST">
+            {% csrf_token %}
+            {{login_data.as_p}}
+        <input type="submit" value="로그인"/>
+        </form>
+    </body>
+</html>

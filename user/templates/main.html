@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>Login Example</title>
+    </head>
+    <body>
+        {% if user.is_active %}
+            <a>{{user.username}}</a>
+            <a href='{% url "logout" %}'>로그아웃</a>
+        {% else %}
+            <a href='{% url "login_page" %}'>로그인</a>
+            <a href=''>회원가입</a>
+        {% endif %}
+    </body>
+</html>
