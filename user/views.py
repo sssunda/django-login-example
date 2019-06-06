@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .forms import LoginForm, JoinForm
+from .forms import LoginForm, JoinForm, ProfileForm
 from django.contrib import auth
+from .models import Profile
 
 # 메인 페이지
 def main_page(request):
@@ -27,11 +28,13 @@ def login_validate(request):
         return render(request, 'login_page.html', {'login_data':login_data,'login_errors':error_message})
     error_message= '로그인 폼이 이상합니다.개발자에게 연락하시길 바랍니다.'
     return render(request, 'login_page.html', {'login_data':login_data,'login_errors':error_message})
-    
+
+# 로그아웃   
 def logout(request):
     auth.logout(request)
     return redirect('/')
-        
+
+# 회원가입 페이지        
 def join_page(request):
     if request.method =='POST':
         form_data = JoinForm(request.POST)
@@ -42,18 +45,46 @@ def join_page(request):
 
             username = form_data.cleaned_data['id']
             password = form_data.cleaned_data['password']
-            password_check = form_data.cleaned_data['password_check']
+              
+            User.objects.create_user(username=username, password=password)
 
-            # ID 중복여부
-            if User.objects.filter(username=username).exists():
-                return render(request, 'join_page.html', {'join_data':form_data, 'join_errors':'아이디가 이미 사용중입니다.'}) 
-                
-            # PASSWORD 동일한지 체크    
-            if password==password_check:
-                User.objects.create_user(username=username, password=password)
-                return redirect('/')
-            return render(request, 'join_page.html', {'join_data':form_data, 'join_errors':'비밀번호를 동일하게 입력해주십시오.'})
+            return redirect('/')
+            
     else :
         form_data = JoinForm()
+        profile_data = ProfileForm()
 
-    return render(request, 'join_page.html', {'join_data':form_data})
+    return render(request, 'join_page.html', {'join_data':form_data, 'profile_data':profile_data})
+
+# 개인정보 수정 페이지
+def edit_user_info(request):
+    # User 모델 클래스 가져오기
+    User = auth.get_user_model()
+    
+    # 로그인된 user 정보 가져오기
+    user_info = get_object_or_404(User, username = request.user.username)    
+
+    if request.method =='POST':
+        form_data = JoinForm(request.POST,instance = user_info)
+        profile_form = ProfileForm(request.POST, instance = user_info.profile)
+
+        if form_data.is_valid() and profile_form.is_valid():
+            password = form_data.cleaned_data['password']
+            email_address = form_data.cleaned_data['email_address']
+            phone_number = profile_form.cleaned_data['phone_number']
+
+            user_info.set_password(password)
+            user_info.email = email_address
+            user_info.profile.phone_number = phone_number
+
+            user_info.save()
+
+            user = auth.authenticate(username=request.user.username, password=password)
+            auth.login(request, user)
+
+            return redirect('/')
+    
+    form_data = JoinForm(instance = user_info)
+    profile_form = ProfileForm(instance = user_info.profile)
+
+    return render(request, 'edit_user.html', {'form_data':form_data, 'profile_form':profile_form})
