@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .forms import LoginForm, JoinForm, ProfileForm
+from .forms import LoginForm, JoinForm, ProfileForm, EditForm
 from django.contrib import auth
 from .models import Profile
 
@@ -38,17 +38,30 @@ def logout(request):
 def join_page(request):
     if request.method =='POST':
         form_data = JoinForm(request.POST)
-        
-        if form_data.is_valid():
+        profile_data = ProfileForm(request.POST)
+        if form_data.is_valid() and profile_data.is_valid():
             # get_user_model helper 함수를 통해 모델 클래스 참조
             User = auth.get_user_model()
 
             username = form_data.cleaned_data['id']
-            password = form_data.cleaned_data['password']
+            password = form_data.cleaned_data['password1']
               
             User.objects.create_user(username=username, password=password)
 
+            email_address = form_data.cleaned_data['email_address']
+            phone_number = profile_data.cleaned_data['phone_number']
+
+            # email, phone_number 등록
+            user_info = get_object_or_404(User, username=username)
+            user_info.email = email_address
+            user_info.profile.phone_number = phone_number
+
+            user_info.save()
+            
             return redirect('/')
+        else :
+            return render(request, 'join_page.html', {'join_data':form_data, 'profile_data':profile_data})
+
             
     else :
         form_data = JoinForm()
@@ -65,13 +78,14 @@ def edit_user_info(request):
     user_info = get_object_or_404(User, username = request.user.username)    
 
     if request.method =='POST':
-        form_data = JoinForm(request.POST,instance = user_info)
-        profile_form = ProfileForm(request.POST, instance = user_info.profile)
+        form_data = EditForm(request.POST,instance = user_info)
+        profile_data = ProfileForm(request.POST, instance = user_info.profile)
 
-        if form_data.is_valid() and profile_form.is_valid():
-            password = form_data.cleaned_data['password']
+        if form_data.is_valid() and profile_data.is_valid():
+            password = form_data.cleaned_data['password1']
+            print(password)
             email_address = form_data.cleaned_data['email_address']
-            phone_number = profile_form.cleaned_data['phone_number']
+            phone_number = profile_data.cleaned_data['phone_number']
 
             user_info.set_password(password)
             user_info.email = email_address
@@ -83,8 +97,10 @@ def edit_user_info(request):
             auth.login(request, user)
 
             return redirect('/')
-    
-    form_data = JoinForm(instance = user_info)
-    profile_form = ProfileForm(instance = user_info.profile)
+        else : 
+            return render(request, 'edit_user.html', {'form_data':form_data, 'profile_data':profile_data})
 
-    return render(request, 'edit_user.html', {'form_data':form_data, 'profile_form':profile_form})
+    form_data = EditForm(instance = user_info)
+    profile_data = ProfileForm(instance = user_info.profile)
+
+    return render(request, 'edit_user.html', {'form_data':form_data, 'profile_data':profile_data})

@@ -1,16 +1,20 @@
-<html>
-    <head>
-        <title>Login Example</title>
-    </head>
-    <body>
-        {% if user.is_active %}
-            <a>{{user.username}}</a>
-            <input type="button" value="개인정보 수정" onclick="location.href='{% url "edit_user_info" %}'"/>
-            <input type="button" value="로그아웃" onclick="location.href='{% url "logout" %}'"/>
-      
-        {% else %}
-            <input type="button" value="로그인" onclick="location.href='{% url "login_page" %}'"/>
-            <input type="button" value="회원가입" onclick="location.href='{% url "join_page" %}'"/>
-        {% endif %}
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_active %}
+<div id='user_title'>
+<a id = 'username'>{{user.username}}</a>님 안녕하세요.
+</div>
+<div id='btn_group'>
+    <input type="button" value="Edit profile" onclick="location.href='{% url "edit_user_info" %}'" />
+    <input type="button" value="Logout" onclick="location.href='{% url "logout" %}'" />
+</div>
+{% else %}
+<div id='btn_group'>
+<input type="button" value="Log in" onclick="location.href='{% url "login_page" %}'" />
+<input type="button" value="Sign up" onclick="location.href='{% url "join_page" %}'" />
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,17 +1,18 @@
-<html>
-    <head>
-        <title>
-            Edit Page
-        </title>
-    </head>
-    <body>
-        <form action="" method="POST">
-            {% csrf_token %}
-            {{ form_data.non_field_errors }}
-            {{form_data.as_p}}
-            {{profile_form.as_p}}
-        <input type="submit" value="저장"/>
-        <input type="button" value="뒤로" onclick="location.href='{% url 'main_page' %}'">
-        </form>
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>[ {{user.username}} ] Edit form</h1>
+
+<div id='form_data'>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form_data.as_p}}
+        {{profile_data.as_p}}
+</div>
+<div id='btn_group'>
+    <input type="submit" value="Save" />
+    <input type="button" value="Cancel" onclick="location.href='{% url 'main_page' %}'">
+</div>
+</form>
+{% endblock %}

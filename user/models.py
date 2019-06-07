@@ -17,7 +17,7 @@ def create_user_profile(sender, instance, created, **kwargs):
     try:
         instance.profile.save()
     except :
-        Profile.objects.create(user=instance)
+        Profile.objects.create(username=instance)
 
 @receiver(post_save, sender= User)
 def save_user_profile(sender, instance, **kwargs):

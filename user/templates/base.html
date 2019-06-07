@@ -1,0 +1,22 @@
+{% load static %}
+<html>
+<head>
+    <title>Django Login Example</title>
+    <!-- static에 있는 css -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Pen+Script|Permanent+Marker&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <!-- context -->
+    <div class="context">
+        <div id="context_body">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+
+</html>
