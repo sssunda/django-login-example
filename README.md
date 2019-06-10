@@ -74,20 +74,25 @@ python manage.py runserver
 
 ##### 스크린샷
 main
+-----
 ![main_page](./img/main_page.png)
 
 
 login page
+-----
 ![login_page](./img/login_page.png)
 
 
 login page (logined)
+-----
 ![logined_page](./img/loggined_page.png)
 
 
 edit page
+-----
 ![edit_page](./img/edit_page.png)
 
 
 sign up page
+-----
 ![sign_up_page](./img/sign_up_page.png) 
