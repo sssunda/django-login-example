@@ -2,7 +2,7 @@
 
 {% block content %}
 <form action="validate" method="POST">
-    <div id='form_data'>
+    <div id='form_data' style="padding-top:50%;">
         {% csrf_token %}
         {{login_data.as_p}}
         {% if login_errors %}
@@ -10,8 +10,8 @@
         {% endif %}
     </div>
     <div id='btn_group'>
-        <input type="submit" value="Log in" />
-        <input type="button" value="Cancel" onclick="location.href='{% url 'main_page' %}'">
+        <input type="submit" class ="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Log in" />
+        <input type="button" class= "mdl-button mdl-js-button mdl-button--primary" value="Cancel" onclick="location.href='{% url 'main_page' %}'">
     </div>
 </form>
 

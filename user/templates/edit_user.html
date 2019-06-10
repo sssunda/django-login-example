@@ -1,18 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<h1>[ {{user.username}} ] Edit form</h1>
-
+<div id="body_title">
+<div id='user_title'>
+    <a id = 'username'></a>
+    </div>
+<h1>Edit Form</h1>
+</div>
 <div id='form_data'>
+    <p>
+        <label for="id">ID : </label>
+        <input type="text" class="txtbox" value={{user.username}} disabled />
+    </p>
     <form action="" method="POST">
         {% csrf_token %}
         {{form_data.as_p}}
         {{profile_data.as_p}}
 </div>
 <div id='btn_group'>
-    <input type="submit" value="Save" />
-    <input type="button" value="Cancel" onclick="location.href='{% url 'main_page' %}'">
+    <input type="submit" class ="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Save" />
+    <input type="button" class= "mdl-button mdl-js-button mdl-button--primary" value="Cancel" onclick="location.href='{% url 'main_page' %}'">
 </div>
 </form>
 {% endblock %}

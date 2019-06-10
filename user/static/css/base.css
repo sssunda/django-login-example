@@ -35,9 +35,14 @@ label{
     display:inline-block;
     text-align: right;
 }
+#body_title{
+    color: 4b67c2;
+    border-bottom: 3px solid lightgray;
+    margin-bottom:10px;
+}
 
 #user_title{
-    text-align: center;
+    padding-top: 20px;
 }
 
 #username{

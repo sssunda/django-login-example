@@ -14,9 +14,9 @@ class LoginForm(forms.Form):
 
 class JoinForm(forms.Form):
     id = forms.CharField(label="ID ", max_length=20)
-    password1 = forms.CharField(label="PASSWORD ", min_length=4, max_length=20, widget=forms.PasswordInput)
+    password1 = forms.CharField(label="Password ", min_length=4, max_length=20, widget=forms.PasswordInput)
     password2 = forms.CharField(
-        label="PASSWORD(again) ", min_length=4, max_length=20, widget=forms.PasswordInput)
+        label="Password(again) ", min_length=4, max_length=20, widget=forms.PasswordInput)
     email_address = forms.EmailField(label="Email Address ", error_messages={'invalid': '정확한 Email 주소를 입력해주세요.'})
 
     def clean_id(self):
@@ -43,9 +43,9 @@ class JoinForm(forms.Form):
         self.fields['email_address'].widget.attrs.update({'class': 'txtbox'})
 
 class EditForm(forms.Form):
-    password1 = forms.CharField(label="PASSWORD ", min_length=4, max_length=20, widget=forms.PasswordInput)
+    password1 = forms.CharField(label="Password ", min_length=4, max_length=20, widget=forms.PasswordInput)
     password2 = forms.CharField(
-        label="PASSWORD(again) ", min_length=4, max_length=20, widget=forms.PasswordInput)
+        label="Password(again) ", min_length=4, max_length=20, widget=forms.PasswordInput)
     email_address = forms.EmailField(label="Email Address ", error_messages={'invalid': '정확한 Email 주소를 입력해주세요.'})
 
     def clean_password2(self):

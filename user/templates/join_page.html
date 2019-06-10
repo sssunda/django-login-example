@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Resgistration form</h1>
-
+<div id="body_title">
+    <h1 >Sign Up</h1>
+    </div>
 <form action="" method="POST">
     <div id='form_data'>
         {% csrf_token %}
@@ -10,8 +11,8 @@
         {{profile_data.as_p}}
     </div>
     <div id='btn_group'>
-        <input type="submit" value="Sign up" />
-        <input type="button" value="Cancel" onclick="location.href='{% url 'main_page' %}'">
+        <input type="submit" class ="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Sign up" />
+        <input type="button" class= "mdl-button mdl-js-button mdl-button--primary" value="Cancel" onclick="location.href='{% url 'main_page' %}'">
     </div>
 </form>
 {% endblock %}
